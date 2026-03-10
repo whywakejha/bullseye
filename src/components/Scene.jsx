@@ -7,6 +7,7 @@ import PaperBall from './PaperBall'
 import AimController from './AimController'
 import Effects from './Effects'
 import GameCamera from './GameCamera'
+import Confetti from './Confetti'
 
 export default function Scene() {
   return (
@@ -47,6 +48,7 @@ export default function Scene() {
         <AimController />
       </Physics>
 
+      <Confetti />
       <GameCamera />
       <Effects />
     </Canvas>

@@ -44,6 +44,35 @@ export default function PaperBall() {
     if (landTimer.current) clearTimeout(landTimer.current)
   }, [ballKey])
 
+  // Listen for launch-ball event from AimController
+  useEffect(() => {
+    const handleLaunch = (event) => {
+      if (!rigidRef.current) return
+      const [x, y, z] = event.detail.velocity
+
+      // Wake and switch from kinematicPosition to dynamic
+      rigidRef.current.setBodyType(0, true)
+      rigidRef.current.setLinvel({ x, y, z }, true)
+
+      // Add random angular velocity for tumbling spin
+      rigidRef.current.setAngvel(
+        {
+          x: (Math.random() - 0.5) * 10,
+          y: (Math.random() - 0.5) * 10,
+          z: (Math.random() - 0.5) * 10,
+        },
+        true
+      )
+
+      setLaunched(true)
+    }
+
+    window.addEventListener('launch-ball', handleLaunch)
+    return () => {
+      window.removeEventListener('launch-ball', handleLaunch)
+    }
+  }, [ballKey])
+
   // Spin the ball during flight
   useFrame((_, delta) => {
     if (meshRef.current && launched) {
