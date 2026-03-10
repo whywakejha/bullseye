@@ -139,10 +139,12 @@ export default function PaperBall() {
       name="paper-ball"
       position={BALL_START}
       colliders="ball"
-      restitution={0.3}
-      friction={0.8}
-      linearDamping={0.2}
+      restitution={0.25}
+      friction={0.6}
+      linearDamping={0.5}
       angularDamping={0.3}
+      density={0.2}
+      ccd
       type={launched ? 'dynamic' : 'kinematicPosition'}
       onIntersectionEnter={handleIntersection}
       onCollisionEnter={handleCollision}
