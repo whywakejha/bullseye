@@ -17,12 +17,16 @@ export default function Scene() {
       camera={{ position: [0, 2.5, 5], fov: 45 }}
       style={{ width: '100vw', height: '100vh', background: '#1a1a2e' }}
     >
-      {/* Pixar lighting */}
-      <ambientLight intensity={0.3} color="#ffe4c4" />
+      {/* Soft hemisphere light — warm sky, cool ground for natural ambient fill */}
+      <hemisphereLight
+        args={['#ffe8c0', '#8ab4f8', 0.35]}
+      />
+
+      {/* Key directional light — slightly warmed up */}
       <directionalLight
         position={[4, 8, 4]}
         intensity={1.8}
-        color="#fff5e6"
+        color="#fff0d4"
         castShadow
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
@@ -34,12 +38,27 @@ export default function Scene() {
         shadow-camera-bottom={-8}
         shadow-bias={-0.0005}
       />
+
+      {/* Warm desk-lamp spotlight from above-left */}
+      <spotLight
+        position={[-3, 6, 2]}
+        angle={0.5}
+        penumbra={0.8}
+        intensity={1.2}
+        color="#ffe0b2"
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+        shadow-bias={-0.0003}
+        target-position={[0, 0, -1]}
+      />
+
       {/* Rim light — warm back fill */}
       <pointLight position={[-3, 5, -3]} intensity={0.6} color="#ffd4a8" />
       {/* Cool fill from the side */}
       <pointLight position={[5, 3, 0]} intensity={0.3} color="#a8d4ff" />
 
-      <Environment preset="apartment" background={false} environmentIntensity={0.2} />
+      <Environment preset="apartment" background={false} environmentIntensity={0.3} />
 
       <Physics gravity={[0, -9.81, 0]} timeStep={1/60}>
         <Office />
