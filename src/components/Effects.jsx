@@ -16,7 +16,6 @@ export default function Effects() {
         quality="medium"
       />
       <Vignette
-        eskil={false}
         offset={0.2}
         darkness={0.4}
       />

@@ -33,20 +33,20 @@ export default function Dustbin() {
 
   return (
     <group ref={groupRef}>
-      {/* Visual bin mesh */}
-      <mesh position={BIN_POS} castShadow receiveShadow>
-        <cylinderGeometry args={[BIN_RADIUS_TOP, BIN_RADIUS_BOTTOM, BIN_HEIGHT, 24]} />
-        <meshToonMaterial color="#4a6741" side={THREE.DoubleSide} />
-      </mesh>
-
-      {/* Rim ring */}
-      <mesh position={[BIN_POS[0], BIN_POS[1] + BIN_HEIGHT / 2, BIN_POS[2]]}>
-        <torusGeometry args={[BIN_RADIUS_TOP, 0.03, 8, 24]} />
-        <meshToonMaterial color="#3a5331" />
-      </mesh>
-
-      {/* Physics colliders — static walls of the bin */}
+      {/* Physics colliders — static walls of the bin, with visual mesh inside */}
       <RigidBody type="fixed" position={BIN_POS}>
+        {/* Visual bin mesh */}
+        <mesh castShadow receiveShadow>
+          <cylinderGeometry args={[BIN_RADIUS_TOP, BIN_RADIUS_BOTTOM, BIN_HEIGHT, 24]} />
+          <meshToonMaterial color="#4a6741" side={THREE.DoubleSide} />
+        </mesh>
+
+        {/* Rim ring */}
+        <mesh position={[0, BIN_HEIGHT / 2, 0]}>
+          <torusGeometry args={[BIN_RADIUS_TOP, 0.03, 8, 24]} />
+          <meshToonMaterial color="#3a5331" />
+        </mesh>
+
         {/* Bottom */}
         <CuboidCollider args={[BIN_RADIUS_BOTTOM, 0.02, BIN_RADIUS_BOTTOM]} position={[0, -BIN_HEIGHT / 2, 0]} />
 
@@ -72,7 +72,7 @@ export default function Dustbin() {
       </RigidBody>
 
       {/* Score detection sensor — inside the bin near bottom */}
-      <RigidBody type="fixed" sensor position={[BIN_POS[0], BIN_POS[1] - 0.1, BIN_POS[2]]} name="bin-sensor">
+      <RigidBody type="fixed" position={[BIN_POS[0], BIN_POS[1] - 0.1, BIN_POS[2]]} name="bin-sensor">
         <CuboidCollider args={[BIN_RADIUS_BOTTOM * 0.7, 0.1, BIN_RADIUS_BOTTOM * 0.7]} sensor />
       </RigidBody>
     </group>

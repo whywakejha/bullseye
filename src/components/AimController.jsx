@@ -1,7 +1,6 @@
 import { useRef, useState, useCallback, useEffect } from 'react'
 import { useThree, useFrame } from '@react-three/fiber'
 import { Line } from '@react-three/drei'
-import { useRapier } from '@react-three/rapier'
 import * as THREE from 'three'
 import useGameState from '../hooks/useGameState'
 import { BALL_START } from './PaperBall'
@@ -10,6 +9,7 @@ const MAX_POWER = 12
 const MIN_POWER = 2
 const TRAJECTORY_STEPS = 40
 const TRAJECTORY_DT = 0.04
+const TRAJECTORY_UPDATE_INTERVAL = 3 // only update state every Nth frame
 
 function computeTrajectory(origin, velocity, steps, dt) {
   const points = []
@@ -36,8 +36,10 @@ export default function AimController() {
   const startPos = useRef(new THREE.Vector2())
   const currentPos = useRef(new THREE.Vector2())
   const [trajectory, setTrajectory] = useState([])
-  const [power, setPower] = useState(0)
+  const [displayPower, setDisplayPower] = useState(0)
+  const powerRef = useRef(0)
   const launchVelRef = useRef(null)
+  const frameCountRef = useRef(0)
 
   const getPointerPos = (e) => {
     const rect = gl.domElement.getBoundingClientRect()
@@ -67,7 +69,7 @@ export default function AimController() {
     if (!dragging.current) return
     dragging.current = false
 
-    if (launchVelRef.current && power > 0.05) {
+    if (launchVelRef.current && powerRef.current > 0.05) {
       // Find the paper ball rigid body and launch it
       throwBall()
 
@@ -80,9 +82,10 @@ export default function AimController() {
     }
 
     setTrajectory([])
-    setPower(0)
+    setDisplayPower(0)
+    powerRef.current = 0
     launchVelRef.current = null
-  }, [throwBall, power])
+  }, [throwBall])
 
   // Attach events
   useEffect(() => {
@@ -113,10 +116,12 @@ export default function AimController() {
     const dist = Math.sqrt(dx * dx + dy * dy)
     const pwr = Math.min(dist * 3, 1)
 
-    setPower(pwr)
+    powerRef.current = pwr
 
     if (pwr < 0.05) {
+      // Clear immediately when power drops below threshold
       setTrajectory([])
+      setDisplayPower(0)
       launchVelRef.current = null
       return
     }
@@ -132,8 +137,14 @@ export default function AimController() {
     const origin = new THREE.Vector3(...BALL_START)
 
     launchVelRef.current = velocity
-    const pts = computeTrajectory(origin, velocity, TRAJECTORY_STEPS, TRAJECTORY_DT)
-    setTrajectory(pts)
+
+    // Only update React state every Nth frame to avoid re-render thrashing
+    frameCountRef.current += 1
+    if (frameCountRef.current % TRAJECTORY_UPDATE_INTERVAL === 0) {
+      const pts = computeTrajectory(origin, velocity, TRAJECTORY_STEPS, TRAJECTORY_DT)
+      setTrajectory(pts)
+      setDisplayPower(pwr)
+    }
   })
 
   if (trajectory.length < 2) return null
@@ -147,7 +158,7 @@ export default function AimController() {
       dashSize={0.15}
       gapSize={0.1}
       transparent
-      opacity={0.5 + power * 0.5}
+      opacity={0.5 + displayPower * 0.5}
     />
   )
 }

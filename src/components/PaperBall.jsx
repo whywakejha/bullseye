@@ -81,7 +81,8 @@ export default function PaperBall() {
     }
   })
 
-  const handleCollision = ({ other }) => {
+  // Sensor intersection handler — detects when ball enters the bin sensor
+  const handleIntersection = ({ other }) => {
     if (!launched || hasScored.current) return
 
     // Check if ball hit the sensor inside the bin
@@ -92,10 +93,18 @@ export default function PaperBall() {
       // Auto-reset after delay
       if (landTimer.current) clearTimeout(landTimer.current)
       landTimer.current = setTimeout(() => resetBall(), 2000)
-      return
     }
+  }
 
-    // If ball hit the floor, it's a miss — start timer to reset
+  // Physical collision handler — detects when ball hits floor/walls (miss)
+  const handleCollision = ({ other }) => {
+    if (!launched || hasScored.current) return
+
+    // Ignore collisions with the bin itself (walls/bottom) — only care about floor/walls for miss
+    // The bin sensor is handled by handleIntersection
+    if (other.rigidBodyObject?.name === 'bin-sensor') return
+
+    // Ball hit something physical (floor, wall, etc.) — start miss timer
     if (landTimer.current) clearTimeout(landTimer.current)
     landTimer.current = setTimeout(() => {
       if (!hasScored.current) {
@@ -117,7 +126,7 @@ export default function PaperBall() {
       linearDamping={0.2}
       angularDamping={0.3}
       type={launched ? 'dynamic' : 'kinematicPosition'}
-      onIntersectionEnter={handleCollision}
+      onIntersectionEnter={handleIntersection}
       onCollisionEnter={handleCollision}
       userData={{ launched }}
     >

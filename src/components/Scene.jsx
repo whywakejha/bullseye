@@ -41,7 +41,7 @@ export default function Scene() {
 
       <Environment preset="apartment" background={false} environmentIntensity={0.2} />
 
-      <Physics gravity={[0, -9.81, 0]} timeStep="vary">
+      <Physics gravity={[0, -9.81, 0]} timeStep={1/60}>
         <Office />
         <Dustbin />
         <PaperBall />
