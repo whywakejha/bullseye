@@ -4,7 +4,7 @@ import { RigidBody } from '@react-three/rapier'
 import * as THREE from 'three'
 import useGameState from '../hooks/useGameState'
 
-const BALL_START = [0, 1.3, 3.5] // on the desk
+const BALL_START = [0, 1.15, 3.0] // on the desk
 
 function makeCrumpledGeometry() {
   const geo = new THREE.IcosahedronGeometry(0.08, 1)

@@ -14,7 +14,7 @@ export default function Scene() {
     <Canvas
       shadows
       gl={{ antialias: true, toneMapping: 3 /* ACESFilmic */ }}
-      camera={{ position: [0, 2.5, 5], fov: 45 }}
+      camera={{ position: [0, 1.4, 3.5], fov: 50 }}
       style={{ width: '100vw', height: '100vh', background: '#1a1a2e' }}
     >
       {/* Soft hemisphere light — warm sky, cool ground for natural ambient fill */}

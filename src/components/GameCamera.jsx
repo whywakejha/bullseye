@@ -3,8 +3,9 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import useGameState from '../hooks/useGameState'
 
-const DEFAULT_POS = new THREE.Vector3(0, 2.5, 5)
-const LOOK_AT = new THREE.Vector3(0, 0.8, -2)
+// Seated human perspective: eye level ~1.2m, sitting at desk (z=3), looking at bin (z=-3)
+const DEFAULT_POS = new THREE.Vector3(0, 1.4, 3.5)
+const LOOK_AT = new THREE.Vector3(0, 0.3, -3)
 
 export default function GameCamera() {
   const { camera } = useThree()
