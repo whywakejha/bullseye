@@ -15,10 +15,19 @@
 - `npm run preview` — preview production build
 - `npm run lint` — ESLint
 
+## Golden Rule: Never Build From Scratch
+- **ALWAYS repurpose** open-source code, models, and assets before writing anything custom
+- Use free GLTF/GLB models from Sketchfab, Poly Pizza, Kenney, Quaternius, etc. for 3D assets
+- Reference existing open-source R3F/Three.js games for physics configs and game mechanics
+- Pull proven shader code, lighting setups, and post-processing configs from community examples
+- Primitive box/cylinder geometry is a last resort, not a starting point
+- If a problem has been solved in open source, use that solution
+
 ## Conventions
 - All 3D components live in `src/components/`
 - HTML overlay UI lives in `src/ui/`
 - Game state hooks in `src/hooks/`
+- 3D models go in `public/models/` as GLTF/GLB files
 - Keep components focused: one concern per file
 - Pixar-quality lighting and shading is non-negotiable
 

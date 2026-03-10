@@ -7,7 +7,7 @@ import useGameState from '../hooks/useGameState'
 const BIN_POS = [0, 0, -3]
 const BIN_RADIUS_TOP = 0.45
 const BIN_RADIUS_BOTTOM = 0.35
-const BIN_HEIGHT = 0.8
+const BIN_HEIGHT = 1.0
 const BIN_WALL = 0.04
 
 // Band positions at 1/3 and 2/3 height (measured from center)
@@ -54,7 +54,7 @@ export default function Dustbin() {
         </mesh>
 
         {/* Rim ring — shinier for Pixar-style specular highlight */}
-        <mesh position={[0, BIN_HEIGHT / 2, 0]} castShadow>
+        <mesh position={[0, BIN_HEIGHT / 2, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
           <torusGeometry args={[BIN_RADIUS_TOP, 0.03, 8, 24]} />
           <meshStandardMaterial
             color="#2e6e35"
@@ -64,7 +64,7 @@ export default function Dustbin() {
         </mesh>
 
         {/* Horizontal ridge band — lower (1/3 height) */}
-        <mesh position={[0, BAND_Y_1, 0]}>
+        <mesh position={[0, BAND_Y_1, 0]} rotation={[Math.PI / 2, 0, 0]}>
           <torusGeometry args={[BAND_R_1, 0.012, 6, 24]} />
           <meshStandardMaterial
             color="#347a3c"
@@ -74,7 +74,7 @@ export default function Dustbin() {
         </mesh>
 
         {/* Horizontal ridge band — upper (2/3 height) */}
-        <mesh position={[0, BAND_Y_2, 0]}>
+        <mesh position={[0, BAND_Y_2, 0]} rotation={[Math.PI / 2, 0, 0]}>
           <torusGeometry args={[BAND_R_2, 0.012, 6, 24]} />
           <meshStandardMaterial
             color="#347a3c"
