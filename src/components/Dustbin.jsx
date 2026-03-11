@@ -4,10 +4,10 @@ import { RigidBody, CuboidCollider } from '@react-three/rapier'
 import useGameState from '../hooks/useGameState'
 import { Trashcan } from './models/Trashcan'
 
-const BIN_POS = [0, 0, -3]
-const BIN_RADIUS_TOP = 0.45
-const BIN_RADIUS_BOTTOM = 0.35
-const BIN_HEIGHT = 1.0
+const BIN_POS = [0, 0, 0]
+const BIN_RADIUS_TOP = 0.55
+const BIN_RADIUS_BOTTOM = 0.42
+const BIN_HEIGHT = 1.3
 const BIN_WALL = 0.04
 
 export default function Dustbin() {
@@ -37,7 +37,7 @@ export default function Dustbin() {
       <RigidBody type="fixed" position={BIN_POS}>
         {/* Kenney Trashcan model as visual representation */}
         {/* The Kenney trashcan is ~0.47 units tall, scale to match BIN_HEIGHT (~1.0) */}
-        <Trashcan scale={[2.1, 2.1, 2.1]} position={[0, -BIN_HEIGHT / 2, 0]} />
+        <Trashcan scale={[3.5, 3.5, 3.5]} position={[0, -BIN_HEIGHT / 2, 0]} />
 
         {/* Bottom */}
         <CuboidCollider args={[BIN_RADIUS_BOTTOM, 0.02, BIN_RADIUS_BOTTOM]} position={[0, -BIN_HEIGHT / 2, 0]} />

@@ -76,7 +76,7 @@ export default function Office() {
         <LampRoundTable scale={[S, S, S]} />
         <pointLight
           position={[0, 0.5, 0]}
-          intensity={1.2}
+          intensity={0.5}
           color="#ffe4b0"
           distance={5}
           decay={2}
@@ -86,6 +86,60 @@ export default function Office() {
 
       {/* ═══════════════  LAPTOP on desk  ═══════════════════════════ */}
       <Laptop position={[-0.3, 0.93, 2.9]} scale={[S, S, S]} rotation={[0, Math.PI, 0]} />
+
+      {/* ═══════════════  COFFEE MUG  ══════════════════════════════ */}
+      <group position={[-0.5, 0.96, 2.85]}>
+        {/* Mug body */}
+        <mesh castShadow>
+          <cylinderGeometry args={[0.04, 0.04, 0.08, 16]} />
+          <meshStandardMaterial color="#e67e22" roughness={0.4} />
+        </mesh>
+        {/* Handle */}
+        <mesh position={[0.05, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+          <torusGeometry args={[0.025, 0.007, 8, 16, Math.PI]} />
+          <meshStandardMaterial color="#e67e22" roughness={0.4} />
+        </mesh>
+      </group>
+
+      {/* ═══════════════  PEN HOLDER  ══════════════════════════════ */}
+      <group position={[0.4, 0.96, 2.85]}>
+        {/* Holder body */}
+        <mesh castShadow>
+          <cylinderGeometry args={[0.035, 0.035, 0.1, 16]} />
+          <meshStandardMaterial color="#333333" roughness={0.6} />
+        </mesh>
+        {/* Pens poking out */}
+        <mesh position={[0.01, 0.08, 0.005]} rotation={[0.1, 0, 0.05]}>
+          <cylinderGeometry args={[0.004, 0.004, 0.1, 6]} />
+          <meshStandardMaterial color="#2980b9" />
+        </mesh>
+        <mesh position={[-0.01, 0.07, -0.005]} rotation={[-0.08, 0, -0.1]}>
+          <cylinderGeometry args={[0.004, 0.004, 0.1, 6]} />
+          <meshStandardMaterial color="#c0392b" />
+        </mesh>
+        <mesh position={[0.005, 0.075, 0.01]} rotation={[0.05, 0, 0.15]}>
+          <cylinderGeometry args={[0.004, 0.004, 0.1, 6]} />
+          <meshStandardMaterial color="#27ae60" />
+        </mesh>
+        <mesh position={[-0.005, 0.072, -0.01]} rotation={[-0.12, 0, -0.05]}>
+          <cylinderGeometry args={[0.004, 0.004, 0.1, 6]} />
+          <meshStandardMaterial color="#f39c12" />
+        </mesh>
+      </group>
+
+      {/* ═══════════════  NOTEPAD  ═════════════════════════════════ */}
+      <group position={[-0.2, 0.94, 3.1]}>
+        {/* Blue cover underneath */}
+        <mesh position={[0, -0.006, 0]} receiveShadow>
+          <boxGeometry args={[0.15, 0.008, 0.1]} />
+          <meshStandardMaterial color="#2c3e80" roughness={0.5} />
+        </mesh>
+        {/* White/cream pages on top */}
+        <mesh position={[0, 0.001, 0]} castShadow receiveShadow>
+          <boxGeometry args={[0.15, 0.01, 0.1]} />
+          <meshStandardMaterial color="#f5f0e0" roughness={0.8} />
+        </mesh>
+      </group>
 
       {/* ═══════════════  CHAIR behind desk  ═══════════════════════ */}
       <ChairDesk position={[0, 0, 4.2]} scale={[S, S, S]} rotation={[0, Math.PI, 0]} />
@@ -106,7 +160,7 @@ export default function Office() {
         </mesh>
         <mesh position={[0, 0, 0.05]}>
           <boxGeometry args={[1.8, 2.3, 0.05]} />
-          <meshStandardMaterial color="#87CEEB" transparent opacity={0.4} />
+          <meshStandardMaterial color="#87CEEB" transparent opacity={0.6} />
         </mesh>
         <mesh position={[0, 0, 0.08]} castShadow>
           <boxGeometry args={[0.06, 2.3, 0.06]} />
@@ -117,6 +171,7 @@ export default function Office() {
           <meshToonMaterial color="#5c3d1e" />
         </mesh>
         <pointLight position={[0, 0, 1]} intensity={0.5} color="#ffffee" distance={6} />
+        <pointLight position={[0, 0, 2]} intensity={1.5} color="#ffffdd" distance={8} />
       </group>
 
       {/* ═════════════  CEILING LIGHT  ═══════════════════════════════ */}

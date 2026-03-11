@@ -4,10 +4,10 @@ import { RigidBody } from '@react-three/rapier'
 import * as THREE from 'three'
 import useGameState from '../hooks/useGameState'
 
-const BALL_START = [0, 1.15, 3.0] // on the desk
+const BALL_START = [0.15, 1.08, 3.0] // on the desk
 
 function makeCrumpledGeometry() {
-  const geo = new THREE.IcosahedronGeometry(0.08, 1)
+  const geo = new THREE.IcosahedronGeometry(0.05, 1)
   const pos = geo.attributes.position
   for (let i = 0; i < pos.count; i++) {
     const noise = 0.9 + Math.random() * 0.2
@@ -150,7 +150,7 @@ export default function PaperBall() {
       onCollisionEnter={handleCollision}
       userData={{ launched }}
     >
-      <group ref={meshRef} scale={0.8}>
+      <group ref={meshRef} scale={1.0}>
         <mesh geometry={geometry} castShadow>
           <meshStandardMaterial
             color="#f0ead6"

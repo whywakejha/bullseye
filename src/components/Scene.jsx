@@ -14,12 +14,12 @@ export default function Scene() {
     <Canvas
       shadows
       gl={{ antialias: true, toneMapping: 3 /* ACESFilmic */ }}
-      camera={{ position: [0, 1.4, 3.5], fov: 50 }}
+      camera={{ position: [0, 1.1, 3.8], fov: 55 }}
       style={{ width: '100vw', height: '100vh', background: '#1a1a2e' }}
     >
       {/* Soft hemisphere light — warm sky, cool ground for natural ambient fill */}
       <hemisphereLight
-        args={['#ffe8c0', '#8ab4f8', 0.35]}
+        args={['#ffe8c0', '#8ab4f8', 0.25]}
       />
 
       {/* Key directional light — slightly warmed up */}
@@ -44,7 +44,7 @@ export default function Scene() {
         position={[-3, 6, 2]}
         angle={0.5}
         penumbra={0.8}
-        intensity={1.2}
+        intensity={0.4}
         color="#ffe0b2"
         castShadow
         shadow-mapSize-width={1024}
